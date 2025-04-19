@@ -1,13 +1,11 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {
-  AiFillGithub,
-  AiOutlineTwitter,
   AiFillInstagram,
   AiFillFacebook,
+  AiFillBehanceCircle,
 } from "react-icons/ai";
-import { FaLinkedinIn, FaYoutube } from "react-icons/fa";
-import { SiCodeforces } from "react-icons/si";
+import { FaLinkedinIn, FaYoutube, FaVimeo } from "react-icons/fa";
 
 function Footer() {
   let date = new Date();
@@ -25,12 +23,12 @@ function Footer() {
           <ul className="footer-icons">
             <li className="social-icons">
               <a
-                href="https://github.com/Tarek-Saad"
+                href="https://www.behance.net/tareksaad3"
                 style={{ color: "white" }}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <AiFillGithub />
+                <AiFillBehanceCircle />
               </a>
             </li>
             <li className="social-icons">
@@ -73,6 +71,17 @@ function Footer() {
                 <FaYoutube />
               </a>
             </li>
+            <li className="social-icons">
+              <a
+                href="https://vimeo.com/tareksaad"
+                style={{ color: "white" }}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <FaVimeo />
+              </a>
+            </li>
+            
           </ul>
         </Col>
       </Row>

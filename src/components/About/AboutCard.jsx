@@ -8,45 +8,44 @@ function AboutCard() {
       <Card.Body>
         <blockquote className="blockquote mb-0">
           <p style={{ textAlign: "start" }}>
-            Hi Everyone, I am <span className="purple">Tarek Saad</span>
-            <span style={{ padding: "0 6px" }} s>
-              from
-            </span>{" "}
-            <span className="purple"> Alexandria, Egypt.</span>
+            Hi Everyone, I’m <span className="purple">Tarek Saad</span>
+            <span style={{ padding: "0 6px" }}>from</span>
+            <span className="purple">Alexandria, Egypt.</span>
             <br /> <hr />
-            I am currently a Full Stack Developer || software developer.
+            I’m a passionate <span className="purple">Video Editor</span> and <span className="purple">Visual Storyteller</span>
+            with over <b>5 years of experience</b> turning raw footage into visual art.
             <br />
-            I study in Computer Science and Artificial Intelligence
+            <br />
+            From editing educational videos and promos to crafting <b>2D/3D animation</b> and cinematic storytelling,
+            I bring ideas to life through motion, rhythm, and emotion.
             <br />
             <br />
-            Apart from coding, some other activities that I love to do!
+            I’ve worked with educators, content creators, and even created a full 3D ad for <b className="purple">Banque du Caire</b>, managing everything from scripting, scene design, voiceovers, to 3D modeling and animation using <b>Blender</b>.
           </p>
-          <ul style={{ lineHeight: "3rem" }}>
+
+          <ul style={{ lineHeight: "2.5rem" }}>
             <li className="about-activity">
-              <ImPointRight /> Learning new tools and technologies
+              <ImPointRight /> Editing videos using Premiere Pro & After Effects
             </li>
             <li className="about-activity">
-              <ImPointRight /> Passionate about Automation and AI
+              <ImPointRight /> Creating motion graphics & 2D animation
             </li>
             <li className="about-activity">
-              <ImPointRight /> Explaining concepts in a fun way
+              <ImPointRight /> 3D modeling & animation with Blender
             </li>
             <li className="about-activity">
-              <ImPointRight /> Leading teams and designing full systems
+              <ImPointRight /> Using AI tools to enhance post-production
             </li>
             <li className="about-activity">
-              <ImPointRight /> Researching better ways to build LMS
+              <ImPointRight /> Storyboarding and scene planning
             </li>
             <li className="about-activity">
-              <ImPointRight /> Creating quality content and design
-            </li>
-            <li className="about-activity">
-              <ImPointRight /> Playing games, football, and traveling
+              <ImPointRight /> Collaborating with teams & freelancing
             </li>
           </ul>
 
-          <p style={{ color: "rgb(155 126 172)" }}>
-            "Creativity is the art of collecting knowledge from different fields and weaving it into a single, powerful idea."{" "}
+          <p style={{ color: "rgb(155 126 172)", marginTop: "1.5rem" }}>
+            "Editing is not just cutting clips — it’s about feeling the story, shaping emotions, and leaving impact."
           </p>
           <footer className="blockquote-footer">Tarek Saad</footer>
         </blockquote>

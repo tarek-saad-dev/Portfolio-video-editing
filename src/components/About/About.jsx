@@ -1,8 +1,8 @@
 // About.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
-import Github from "./Github";
+import DesignActivity from "./Github";
 import Techstack from "./Techstack";
 import Aboutcard from "./AboutCard";
 import laptopImg from "../../Assets/about.png";
@@ -11,52 +11,73 @@ import WorkExperience from "./WorkExperience";
 
 
 function About() {
-  // Define the skills and technologies you want to show on the About page
-  const skills = [
-    "Express.js",
-    "React",
-    "NestJS",
-    "Next.js",
-    "TypeScript",
-    "Node.js",
-    "MongoDB",
-    "MySQL",
-    "PostgreSQL",
-    "SQL Server",
-    "Neo4j",
-    "Python",
-    "Bootstrap",
-    "Tailwind",
-    "Redux"
-
-  ];
+  const [skills, setSkills] = useState([]);
+  const [tools, setTools] = useState([]);
+  const [experiences, setExperiences] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [toolsLoading, setToolsLoading] = useState(true);
+  const [experiencesLoading, setExperiencesLoading] = useState(true);
   
+  useEffect(() => {
+    // Fetch skills from the API
+    const apiBaseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://portfolio-video-editing-server.vercel.app'
+      : 'http://localhost:3000';
+      
+    fetch(`${apiBaseUrl}/api/skills`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        setSkills(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching skills:", error);
+        setLoading(false);
+      });
+      
+    // Fetch tools from the API
+    fetch(`${apiBaseUrl}/api/tools`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        setTools(data);
+        setToolsLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching tools:", error);
+        setToolsLoading(false);
+      });
+      
+    // Fetch experiences from the API
+    fetch(`${apiBaseUrl}/api/experiences`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Sort experiences by order if available
+        const sortedData = data.sort((a, b) => (a.order || 0) - (b.order || 0));
+        setExperiences(sortedData);
+        setExperiencesLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching experiences:", error);
+        setExperiencesLoading(false);
+      });
+  }, []);
   
-  
-  const technologies = [ ];
-
-  // Define the tools you want to show on the About page
-  const tools = [
-    "VS Code",
-    "Postman",
-    "MongoDB Compass",
-    // "Docker",
-    "Swagger",
-    "GitHub",
-    "Git",
-    "neondb",
-    "Firebase",
-    "Vercel",
-    "Netlify",
-    "Render",
-    "Stripe",
-    "Figma",
-    "API",
-    "Axios",
-    "JWT",
-    "Open Ai"
-  ];
-  
+  const technologies = [];
 
   return (
     <Container fluid className="about-section" style={{ backgroundColor: "#0d1117" }}>
@@ -89,18 +110,30 @@ function About() {
         <h1 className="project-heading" style={{ color: "#c889e6", textAlign: "center", marginBottom: "20px" }}>
           Professional <strong className="purple">Skillset</strong>
         </h1>
-        <Techstack skills={skills} technologies={technologies} />
+        {loading ? (
+          <div className="text-center" style={{ color: "white" }}>Loading skills...</div>
+        ) : (
+          <Techstack skills={skills} technologies={technologies} />
+        )}
 
         <h1 className="project-heading" style={{ color: "#c889e6", textAlign: "center", marginBottom: "20px" }}>
           <strong className="purple">Tools</strong> I use
         </h1>
-        <Toolstack tools={tools} />
+        {toolsLoading ? (
+          <div className="text-center" style={{ color: "white" }}>Loading tools...</div>
+        ) : (
+          <Toolstack tools={tools} />
+        )}
         
         <h1 className="project-heading" style={{ color: "#c889e6", textAlign: "center", marginBottom: "20px" }}>
           Work<strong className="purple">Experience</strong>
         </h1>
-        <WorkExperience />
-        <Github />
+        {experiencesLoading ? (
+          <div className="text-center" style={{ color: "white" }}>Loading experiences...</div>
+        ) : (
+          <WorkExperience experiences={experiences} />
+        )}
+        <DesignActivity />
       </Container>
     </Container>
   );
