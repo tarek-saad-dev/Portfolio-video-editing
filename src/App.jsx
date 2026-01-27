@@ -17,6 +17,7 @@ import Resume from "./components/Resume/ResumeNew";
 import ProjectDetail from "./components/Projects/ProjectDetail";
 import Preloader from "./components/Pre";
 import ScrollToTop from "./components/ScrollToTop";
+import { API_BASE_URL } from "./config/api";
 import "./style.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -38,11 +39,7 @@ function App() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const apiBaseUrl = process.env.NODE_ENV === 'production' 
-          ? 'https://portfolio-video-editing-server.vercel.app'
-          : 'http://localhost:3000';
-          
-        const response = await fetch(`${apiBaseUrl}/api/projects`);
+        const response = await fetch(`${API_BASE_URL}/api/projects`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch projects');

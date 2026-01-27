@@ -8,6 +8,7 @@ import Aboutcard from "./AboutCard";
 import laptopImg from "../../Assets/about.png";
 import Toolstack from "./Toolstack"; // Adjusted import path
 import WorkExperience from "./WorkExperience";
+import { API_BASE_URL } from "../../config/api";
 
 
 function About() {
@@ -20,11 +21,7 @@ function About() {
   
   useEffect(() => {
     // Fetch skills from the API
-    const apiBaseUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://portfolio-video-editing-server.vercel.app'
-      : 'http://localhost:3000';
-      
-    fetch(`${apiBaseUrl}/api/skills`)
+    fetch(`${API_BASE_URL}/api/skills`)
       .then(response => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -41,7 +38,7 @@ function About() {
       });
       
     // Fetch tools from the API
-    fetch(`${apiBaseUrl}/api/tools`)
+    fetch(`${API_BASE_URL}/api/tools`)
       .then(response => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -58,7 +55,7 @@ function About() {
       });
       
     // Fetch experiences from the API
-    fetch(`${apiBaseUrl}/api/experiences`)
+    fetch(`${API_BASE_URL}/api/experiences`)
       .then(response => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

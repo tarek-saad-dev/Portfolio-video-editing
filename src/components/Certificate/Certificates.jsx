@@ -4,6 +4,7 @@ import CertificateCard from "./CertificateCard";
 import Particle from "../Particle";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { API_BASE_URL } from "../../config/api";
 
 function Certificates() {
   const [certificates, setCertificates] = useState([]);
@@ -23,11 +24,7 @@ function Certificates() {
     const fetchCertificates = async () => {
       try {
         setLoading(true);
-        const apiBaseUrl = process.env.NODE_ENV === 'production' 
-          ? 'https://portfolio-video-editing-server.vercel.app'
-          : 'http://localhost:3000';
-          
-        const response = await fetch(`${apiBaseUrl}/api/certificates`);
+        const response = await fetch(`${API_BASE_URL}/api/certificates`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch certificates');

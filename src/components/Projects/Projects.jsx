@@ -4,6 +4,7 @@ import ProjectCard from "./ProjectCards";
 import Particle from "../Particle";
 import "aos/dist/aos.css";
 import AOS from "aos";
+import { API_BASE_URL } from "../../config/api";
 
 function Projects({ projects: propProjects, loading, error }) {
   const [projects, setProjects] = useState([]);
@@ -30,11 +31,7 @@ function Projects({ projects: propProjects, loading, error }) {
       const fetchProjects = async () => {
         try {
           setIsLoading(true);
-          const apiBaseUrl = process.env.NODE_ENV === 'production' 
-            ? 'https://portfolio-video-editing-server.vercel.app'
-            : 'http://localhost:3000';
-            
-          const response = await fetch(`${apiBaseUrl}/api/projects`);
+          const response = await fetch(`${API_BASE_URL}/api/projects`);
           
           if (!response.ok) {
             throw new Error('Failed to fetch projects');
