@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ProjectCard from "./ProjectCards";
+import VideoProjectCard from "./VideoProjectCard";
+import VideoModal from "./VideoModal";
 import Particle from "../Particle";
 import "aos/dist/aos.css";
 import AOS from "aos";
@@ -10,6 +12,12 @@ function Projects({ projects: propProjects, loading, error }) {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [videoModal, setVideoModal] = useState({
+    isOpen: false,
+    title: "",
+    videoUrl: "",
+    videoType: "vimeo",
+  });
 
   useEffect(() => {
     AOS.init({
@@ -91,6 +99,29 @@ function Projects({ projects: propProjects, loading, error }) {
     );
   }
 
+  const handleVideoPlay = ({ id, title, videoUrl, videoType }) => {
+    setVideoModal({
+      isOpen: true,
+      title,
+      videoUrl,
+      videoType: videoType || "vimeo",
+    });
+  };
+
+  const handleVideoClose = () => {
+    setVideoModal({
+      isOpen: false,
+      title: "",
+      videoUrl: "",
+      videoType: "vimeo",
+    });
+  };
+
+  // Check if project has video (has videoUrl property)
+  const hasVideo = (project) => {
+    return project.videoUrl && project.videoUrl.trim() !== "";
+  };
+
   return (
     <Container fluid className="project-section">
       <Particle />
@@ -110,18 +141,38 @@ function Projects({ projects: propProjects, loading, error }) {
               data-aos-delay={`${index * 100}`}
               key={project.id}
             >
-              <ProjectCard
-                id={project.id}
-                imgPath={project.imgPath}
-                title={project.title}
-                description={project.description}
-                ghLink={project.ghLink}
-                demoLink={project.demoLink}
-              />
+              {hasVideo(project) ? (
+                <VideoProjectCard
+                  id={project.id}
+                  title={project.title}
+                  type={project.type || project.category}
+                  thumbnail={project.imgPath}
+                  videoUrl={project.videoUrl}
+                  videoType={project.videoType || "vimeo"}
+                  onPlayClick={handleVideoPlay}
+                />
+              ) : (
+                <ProjectCard
+                  id={project.id}
+                  imgPath={project.imgPath}
+                  title={project.title}
+                  description={project.description}
+                  ghLink={project.ghLink}
+                  demoLink={project.demoLink}
+                />
+              )}
             </Col>
           ))}
         </Row>
       </Container>
+      
+      <VideoModal
+        isOpen={videoModal.isOpen}
+        onClose={handleVideoClose}
+        videoUrl={videoModal.videoUrl}
+        title={videoModal.title}
+        videoType={videoModal.videoType}
+      />
     </Container>
   );
 }
