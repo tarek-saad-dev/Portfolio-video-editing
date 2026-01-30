@@ -9,7 +9,7 @@
  */
 const API_BASE_URL =
     process.env.REACT_APP_API_BASE_URL ||
-    'https://portfolio-video-editing-server.vercel.app';
+    'https://portfolio-video-editing-server-three.vercel.app';
 
 export { API_BASE_URL };
 export default API_BASE_URL;
