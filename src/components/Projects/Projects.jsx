@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import ProjectCard from "./ProjectCards";
-import VideoProjectCard from "./VideoProjectCard";
-import VideoModal from "./VideoModal";
+import { Container } from "react-bootstrap";
+import CinemaProjectCard from "./CinemaProjectCard";
+import CinemaModal from "./CinemaModal";
 import Particle from "../Particle";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import { API_BASE_URL } from "../../config/api";
+import "./CinemaProjects.css";
 
 function Projects({ projects: propProjects, loading, error }) {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [videoModal, setVideoModal] = useState({
-    isOpen: false,
-    title: "",
-    videoUrl: "",
-    videoType: "vimeo",
-  });
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     AOS.init({
@@ -99,79 +94,43 @@ function Projects({ projects: propProjects, loading, error }) {
     );
   }
 
-  const handleVideoPlay = ({ id, title, videoUrl, videoType }) => {
-    setVideoModal({
-      isOpen: true,
-      title,
-      videoUrl,
-      videoType: videoType || "vimeo",
-    });
+  const handleProjectSelect = (project) => {
+    setSelectedProject(project);
   };
 
-  const handleVideoClose = () => {
-    setVideoModal({
-      isOpen: false,
-      title: "",
-      videoUrl: "",
-      videoType: "vimeo",
-    });
-  };
-
-  // Check if project has video (has videoUrl property)
-  const hasVideo = (project) => {
-    return project.videoUrl && project.videoUrl.trim() !== "";
+  const handleModalClose = () => {
+    setSelectedProject(null);
   };
 
   return (
-    <Container fluid className="project-section">
+    <Container fluid className="project-section cinema-projects-section">
       <Particle />
-      <Container>
-        <h1 className="project-heading">
-          My Recent <strong className="purple">Works</strong>
-        </h1>
-        <p style={{ color: "white" }}>
-          Here are a few projects I've worked on recently.
-        </p>
-        <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
+      <Container className="cinema-projects-container">
+        <div className="cinema-section-header" data-aos="fade-up">
+          <h1 className="cinema-section-title">
+            Selected <strong className="purple">Works</strong>
+          </h1>
+          <p className="cinema-section-subtitle">
+            Featured projects from my portfolio
+          </p>
+        </div>
+
+        <div className="cinema-grid">
           {projects.map((project, index) => (
-            <Col
-              md={4}
-              className="project-card"
-              data-aos="fade-up"
-              data-aos-delay={`${index * 100}`}
-              key={project.id}
-            >
-              {hasVideo(project) ? (
-                <VideoProjectCard
-                  id={project.id}
-                  title={project.title}
-                  type={project.type || project.category}
-                  thumbnail={project.imgPath}
-                  videoUrl={project.videoUrl}
-                  videoType={project.videoType || "vimeo"}
-                  onPlayClick={handleVideoPlay}
-                />
-              ) : (
-                <ProjectCard
-                  id={project.id}
-                  imgPath={project.imgPath}
-                  title={project.title}
-                  description={project.description}
-                  ghLink={project.ghLink}
-                  demoLink={project.demoLink}
-                />
-              )}
-            </Col>
+            <CinemaProjectCard
+              key={project.id || index}
+              project={project}
+              onSelect={handleProjectSelect}
+              index={index}
+            />
           ))}
-        </Row>
+        </div>
       </Container>
-      
-      <VideoModal
-        isOpen={videoModal.isOpen}
-        onClose={handleVideoClose}
-        videoUrl={videoModal.videoUrl}
-        title={videoModal.title}
-        videoType={videoModal.videoType}
+
+      <CinemaModal
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={handleModalClose}
       />
     </Container>
   );

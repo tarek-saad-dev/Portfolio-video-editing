@@ -1,0 +1,81 @@
+/* Cinema Projects Section */
+
+.cinema-projects-section {
+  position: relative;
+  padding-top: 150px !important;
+  padding-bottom: 80px !important;
+  background-image: linear-gradient(
+    to bottom left,
+    rgba(17, 16, 16, 0.582),
+    rgba(12, 8, 24, 0.904)
+  ) !important;
+  min-height: 100vh;
+}
+
+.cinema-projects-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.cinema-section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 0 20px;
+}
+
+.cinema-section-title {
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.cinema-section-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.cinema-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 0 20px;
+}
+
+/* Responsive Grid */
+@media (min-width: 1200px) {
+  .cinema-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .cinema-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .cinema-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .cinema-section-title {
+    font-size: 2rem;
+  }
+
+  .cinema-section-subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cinema-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,0 +1,251 @@
+/* Cinema Style Modal */
+
+.cinema-modal .modal-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.cinema-modal-body {
+  background: linear-gradient(to bottom left, rgba(17, 16, 16, 0.98), rgba(12, 8, 24, 0.98));
+  border: 1px solid rgba(200, 137, 230, 0.3);
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  animation: cinemaModalFadeIn 0.3s ease-out;
+}
+
+@keyframes cinemaModalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cinema-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(200, 137, 230, 0.2);
+  border: 1px solid rgba(200, 137, 230, 0.5);
+  color: #c889e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  font-size: 18px;
+}
+
+.cinema-modal-close:hover {
+  background: rgba(200, 137, 230, 0.4);
+  border-color: #c889e6;
+  transform: scale(1.1);
+}
+
+.cinema-modal-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.cinema-video-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cinema-video-iframe,
+.cinema-video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.cinema-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cinema-modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.cinema-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(13, 17, 23, 0.8) 100%);
+}
+
+.cinema-modal-content {
+  padding: 30px;
+}
+
+.cinema-modal-header-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.cinema-modal-title {
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin: 12px 0 0 0;
+  line-height: 1.2;
+}
+
+.cinema-modal-year {
+  font-size: 2rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 2px;
+}
+
+.cinema-modal-description {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 30px;
+  max-width: 800px;
+}
+
+.cinema-modal-details {
+  border-top: 1px solid rgba(200, 137, 230, 0.2);
+  padding-top: 24px;
+  margin-bottom: 24px;
+}
+
+.cinema-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.cinema-detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.cinema-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.cinema-detail-icon {
+  width: 16px;
+  height: 16px;
+  color: #c889e6;
+}
+
+.cinema-detail-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #c889e6;
+}
+
+.cinema-detail-value {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.cinema-tools-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.cinema-tool-tag {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cinema-tool-separator {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 8px;
+}
+
+.cinema-modal-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cinema-link-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background: rgba(200, 137, 230, 0.2);
+  border: 1px solid rgba(200, 137, 230, 0.4);
+  border-radius: 6px;
+  color: #c889e6;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.cinema-link-button:hover {
+  background: rgba(200, 137, 230, 0.4);
+  border-color: #c889e6;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(200, 137, 230, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cinema-modal-content {
+    padding: 20px;
+  }
+
+  .cinema-modal-title {
+    font-size: 1.8rem;
+  }
+
+  .cinema-modal-year {
+    font-size: 1.5rem;
+  }
+
+  .cinema-modal-description {
+    font-size: 1rem;
+  }
+
+  .cinema-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cinema-modal-header-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
