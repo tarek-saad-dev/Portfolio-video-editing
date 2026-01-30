@@ -4,10 +4,8 @@ import { Col, Row } from "react-bootstrap";
 import {
   SiVisualstudiocode,
   SiPostman,
-  SiSlack,
   SiVercel,
   SiFirebase,
-  SiStrapi,
   SiGithub,
   SiNetlify,
   SiPostgresql,
@@ -20,14 +18,9 @@ import {
   SiOpenai,
   SiAxios
 } from "react-icons/si";
-import { FaSms, FaCcStripe, FaWindows } from "react-icons/fa";
-import { MdAnimation } from "react-icons/md";
-import { GiArtificialIntelligence } from "react-icons/gi";
-import { DiGit, DiNodejs, DiMongodb, DiResponsive } from "react-icons/di";
+import { FaCcStripe } from "react-icons/fa";
+import { DiGit, DiNodejs, DiMongodb } from "react-icons/di";
 import { TbApi } from "react-icons/tb";
-import { FaMapMarkedAlt } from "react-icons/fa";
-import { TbBrandSupabase } from "react-icons/tb";
-import { DiVisualstudio } from "react-icons/di";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -156,14 +149,9 @@ function Toolstack({ tools }) {
           : toolIconMapping[toolName];
         
         if (!hasBuiltInIcon) {
-          try {
-            const toolKey = toolName.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '');
-            iconPromises[toolName] = import(`../../assets/tool-icons/${toolKey}.svg`)
-              .then(module => module.default)
-              .catch(() => null);
-          } catch (error) {
-            iconPromises[toolName] = Promise.resolve(null);
-          }
+          // Skip dynamic import for non-existent directories to avoid build errors
+          // Custom icons can be added later if needed
+          iconPromises[toolName] = Promise.resolve(null);
         }
       });
       

@@ -147,14 +147,9 @@ function Techstack({ skills, technologies }) {
         : iconMapping[techName];
       
       if (!hasBuiltInIcon) {
-        try {
-          const techKey = techName.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '');
-          iconPromises[techName] = import(`../../assets/tech-icons/${techKey}.svg`)
-            .then(module => module.default)
-            .catch(() => null);
-        } catch (error) {
-          iconPromises[techName] = Promise.resolve(null);
-        }
+        // Skip dynamic import for non-existent directories to avoid build errors
+        // Custom icons can be added later if needed
+        iconPromises[techName] = Promise.resolve(null);
       }
     });
     
