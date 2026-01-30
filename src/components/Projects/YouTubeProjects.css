@@ -1,0 +1,88 @@
+/* YouTube Projects Section */
+
+.youtube-projects-section {
+  position: relative;
+  padding-top: 150px !important;
+  padding-bottom: 80px !important;
+  background-image: linear-gradient(
+    to bottom left,
+    rgba(17, 16, 16, 0.582),
+    rgba(12, 8, 24, 0.904)
+  ) !important;
+  min-height: 100vh;
+}
+
+.youtube-projects-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.youtube-section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 0 20px;
+}
+
+.youtube-section-title {
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.youtube-section-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.youtube-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 0 20px;
+}
+
+.youtube-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.1rem;
+}
+
+/* Responsive Grid */
+@media (min-width: 1200px) {
+  .youtube-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .youtube-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .youtube-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .youtube-section-title {
+    font-size: 2rem;
+  }
+
+  .youtube-section-subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .youtube-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

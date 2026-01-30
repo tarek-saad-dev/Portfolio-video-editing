@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import CinemaProjectCard from "./CinemaProjectCard";
-import CinemaModal from "./CinemaModal";
+import YouTubeProjectCard from "./YouTubeProjectCard";
+import YouTubeModal from "./YouTubeModal";
 import Particle from "../Particle";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import { API_BASE_URL } from "../../config/api";
-import "./CinemaProjects.css";
+import "./YouTubeProjects.css";
 
 function Projects({ projects: propProjects, loading, error }) {
   const [projects, setProjects] = useState([]);
@@ -95,7 +95,9 @@ function Projects({ projects: propProjects, loading, error }) {
   }
 
   const handleProjectSelect = (project) => {
-    setSelectedProject(project);
+    if (project && project.youtubeUrl) {
+      setSelectedProject(project);
+    }
   };
 
   const handleModalClose = () => {
@@ -103,31 +105,44 @@ function Projects({ projects: propProjects, loading, error }) {
   };
 
   return (
-    <Container fluid className="project-section cinema-projects-section">
+    <Container fluid className="project-section youtube-projects-section">
       <Particle />
-      <Container className="cinema-projects-container">
-        <div className="cinema-section-header" data-aos="fade-up">
-          <h1 className="cinema-section-title">
+      <Container className="youtube-projects-container">
+        <div className="youtube-section-header" data-aos="fade-up">
+          <h1 className="youtube-section-title">
             Selected <strong className="purple">Works</strong>
           </h1>
-          <p className="cinema-section-subtitle">
+          <p className="youtube-section-subtitle">
             Featured projects from my portfolio
           </p>
         </div>
 
-        <div className="cinema-grid">
-          {projects.map((project, index) => (
-            <CinemaProjectCard
-              key={project.id || index}
-              project={project}
-              onSelect={handleProjectSelect}
-              index={index}
-            />
-          ))}
-        </div>
+        {projects.length > 0 ? (
+          <div className="youtube-grid">
+            {projects.map((project, index) => {
+              // Only render projects with YouTube URLs
+              if (!project || !project.youtubeUrl) {
+                return null;
+              }
+              
+              return (
+                <YouTubeProjectCard
+                  key={project.id || `project-${index}`}
+                  project={project}
+                  onSelect={handleProjectSelect}
+                  index={index}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div className="youtube-empty-state">
+            <p>No projects available</p>
+          </div>
+        )}
       </Container>
 
-      <CinemaModal
+      <YouTubeModal
         project={selectedProject}
         isOpen={!!selectedProject}
         onClose={handleModalClose}
