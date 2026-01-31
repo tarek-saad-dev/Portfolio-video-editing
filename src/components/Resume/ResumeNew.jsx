@@ -13,7 +13,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 function ResumeNew() {
   const [width, setWidth] = useState(1200);
-  const [numPages, setNumPages] = useState(null);
 
   useEffect(() => {
     AOS.init({
@@ -23,10 +22,6 @@ function ResumeNew() {
     });
     setWidth(window.innerWidth);
   }, []);
-
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
 
   return (
     <div>
@@ -49,7 +44,6 @@ function ResumeNew() {
           <Document
             file={pdf}
             className="d-flex justify-content-center"
-            onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={(error) => console.error("Error loading PDF:", error)}
           >
             <Page pageNumber={1} scale={width > 786 ? 1.7 : 0.6} />
