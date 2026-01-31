@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Particle from "../Particle";
-import pdf from "../../Assets/../Assets/Tarek_CV.pdf";
+import pdf from "../../Assets/Tarek_CV.pdf";
 import { AiOutlineDownload } from "react-icons/ai";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
@@ -13,6 +13,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 function ResumeNew() {
   const [width, setWidth] = useState(1200);
+  const [numPages, setNumPages] = useState(null);
 
   useEffect(() => {
     AOS.init({
@@ -22,6 +23,10 @@ function ResumeNew() {
     });
     setWidth(window.innerWidth);
   }, []);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
 
   return (
     <div>
@@ -41,7 +46,12 @@ function ResumeNew() {
         </Row>
 
         <Row className="resume" data-aos="fade-up" data-aos-delay="200">
-          <Document file={pdf} className="d-flex justify-content-center">
+          <Document
+            file={pdf}
+            className="d-flex justify-content-center"
+            onLoadSuccess={onDocumentLoadSuccess}
+            onLoadError={(error) => console.error("Error loading PDF:", error)}
+          >
             <Page pageNumber={1} scale={width > 786 ? 1.7 : 0.6} />
           </Document>
         </Row>

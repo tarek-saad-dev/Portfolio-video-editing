@@ -2,22 +2,19 @@ import React from "react";
 import Typewriter from "typewriter-effect";
 
 function Type() {
-    return (
-        <Typewriter 
-            options={{
+    return ( <
+        Typewriter options = {
+            {
                 strings: [
-                    "Creative Video Editor",
-                    "Motion Graphics Artist",
-                    "2D & 3D Animator",
-                    "AI-Powered Video Creator",
-                    "Visual Storyteller",
-                    "YouTube Content Editor",
-                    "Freelance Promo Maker",
+                    "Educational Video Editor",
+                    "Long Educational Videos Editor",
+                    "Short Educational Videos Editor",
                 ],
                 autoStart: true,
                 loop: true,
                 deleteSpeed: 50,
-            }} 
+            }
+        }
         />
     );
 }
