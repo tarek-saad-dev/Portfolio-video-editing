@@ -123,16 +123,15 @@ function NavBar() {
               </Button>
             </Nav.Item>
 
-            {/* Codeforces button */}
+            {/* Vimeo button */}
             <Nav.Item className="fork-btn">
               <Button
                 href="https://vimeo.com/tareksaad"
                 target="_blank"
-                className="fork-btn-inner"
-                style={{ 
-                  marginLeft: "10px",
-                  backgroundColor: "#1ab7ea", 
-                  borderColor: "#1ab7ea" 
+                className="fork-btn-inner vimeo-btn"
+                style={{
+                  backgroundColor: "#1ab7ea",
+                  borderColor: "#1ab7ea",
                 }}
               >
                 <FaVimeo style={{ fontSize: "1.2em" }} />{" "}
