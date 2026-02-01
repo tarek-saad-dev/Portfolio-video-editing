@@ -8,6 +8,25 @@ import AOS from "aos";
 import { API_BASE_URL } from "../../config/api";
 import "./YouTubeProjects.css";
 
+const getProjectSortTime = (project) => {
+  if (!project) return 0;
+
+  if (project.date) {
+    const t = Date.parse(project.date);
+    if (!Number.isNaN(t)) return t;
+  }
+
+  if (project.year) {
+    const t = Date.parse(String(project.year));
+    if (!Number.isNaN(t)) return t;
+
+    const y = Number(project.year);
+    if (!Number.isNaN(y)) return new Date(y, 0, 1).getTime();
+  }
+
+  return 0;
+};
+
 function Projects({ projects: propProjects, loading, error }) {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +45,10 @@ function Projects({ projects: propProjects, loading, error }) {
   // Otherwise, fetch them from the API
   useEffect(() => {
     if (propProjects) {
-      setProjects(propProjects);
+      const sortedProjects = [...propProjects].sort(
+        (a, b) => getProjectSortTime(b) - getProjectSortTime(a),
+      );
+      setProjects(sortedProjects);
       setIsLoading(loading || false);
       setErrorMessage(error || null);
     } else {
@@ -35,28 +57,36 @@ function Projects({ projects: propProjects, loading, error }) {
         try {
           setIsLoading(true);
           const response = await fetch(`${API_BASE_URL}/api/projects`);
-          
+
           if (!response.ok) {
-            throw new Error('Failed to fetch projects');
+            throw new Error("Failed to fetch projects");
           }
-          
+
           const data = await response.json();
-          
+
           // Process the image paths to use the public URL
-          const processedProjects = data.map(project => {
+          const processedProjects = data.map((project) => {
             return {
               ...project,
-              imgPath: project.imgPath ? process.env.PUBLIC_URL + project.imgPath : null,
-              imagePaths: project.imagePaths ? project.imagePaths.map(path => 
-                process.env.PUBLIC_URL + path
-              ) : []
+              imgPath: project.imgPath
+                ? process.env.PUBLIC_URL + project.imgPath
+                : null,
+              imagePaths: project.imagePaths
+                ? project.imagePaths.map(
+                    (path) => process.env.PUBLIC_URL + path,
+                  )
+                : [],
             };
           });
-          
+
+          processedProjects.sort(
+            (a, b) => getProjectSortTime(b) - getProjectSortTime(a),
+          );
+
           setProjects(processedProjects);
           setIsLoading(false);
         } catch (error) {
-          console.error('Error fetching projects:', error);
+          console.error("Error fetching projects:", error);
           setErrorMessage(error.message);
           setIsLoading(false);
         }
@@ -124,7 +154,7 @@ function Projects({ projects: propProjects, loading, error }) {
               if (!project || !project.youtubeUrl) {
                 return null;
               }
-              
+
               return (
                 <YouTubeProjectCard
                   key={project.id || `project-${index}`}

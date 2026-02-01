@@ -22,6 +22,25 @@ import "./style.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const getProjectSortTime = (project) => {
+  if (!project) return 0;
+
+  if (project.date) {
+    const t = Date.parse(project.date);
+    if (!Number.isNaN(t)) return t;
+  }
+
+  if (project.year) {
+    const t = Date.parse(String(project.year));
+    if (!Number.isNaN(t)) return t;
+
+    const y = Number(project.year);
+    if (!Number.isNaN(y)) return new Date(y, 0, 1).getTime();
+  }
+
+  return 0;
+};
+
 function App() {
   const [load, updateLoad] = useState(true);
   const [projects, setProjects] = useState([]);
@@ -40,29 +59,35 @@ function App() {
     const fetchProjects = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/projects`);
-        
+
         if (!response.ok) {
-          throw new Error('Failed to fetch projects');
+          throw new Error("Failed to fetch projects");
         }
-        
+
         const data = await response.json();
-        
+
         // Process projects to add public URL to image paths
-        const processedProjects = data.map(project => {
+        const processedProjects = data.map((project) => {
           return {
             ...project,
             // Convert relative paths to absolute URLs
-            imgPath: project.imgPath ? process.env.PUBLIC_URL + project.imgPath : null,
-            imagePaths: project.imagePaths ? project.imagePaths.map(path => 
-              process.env.PUBLIC_URL + path
-            ) : []
+            imgPath: project.imgPath
+              ? process.env.PUBLIC_URL + project.imgPath
+              : null,
+            imagePaths: project.imagePaths
+              ? project.imagePaths.map((path) => process.env.PUBLIC_URL + path)
+              : [],
           };
         });
-        
+
+        processedProjects.sort(
+          (a, b) => getProjectSortTime(b) - getProjectSortTime(a),
+        );
+
         setProjects(processedProjects);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching projects:', error);
+        console.error("Error fetching projects:", error);
         setError(error.message);
         setLoading(false);
       }
@@ -79,10 +104,21 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/project" element={<Projects projects={projects} loading={loading} error={error} />} />
+          <Route
+            path="/project"
+            element={
+              <Projects projects={projects} loading={loading} error={error} />
+            }
+          />
           <Route
             path="/project/:projectId"
-            element={<ProjectDetail projects={projects} loading={loading} error={error} />}
+            element={
+              <ProjectDetail
+                projects={projects}
+                loading={loading}
+                error={error}
+              />
+            }
           />
           <Route path="/about" element={<About />} />
           <Route path="/resume" element={<Resume />} />
