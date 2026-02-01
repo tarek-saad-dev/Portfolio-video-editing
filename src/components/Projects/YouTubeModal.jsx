@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { FaTimes, FaClock, FaFilm } from "react-icons/fa";
-import { extractYouTubeId, getYouTubeEmbedUrl, getProjectThumbnail } from "../../utils/youtubeUtils";
+import {
+  extractYouTubeId,
+  getYouTubeEmbedUrl,
+  getProjectThumbnail,
+} from "../../utils/youtubeUtils";
 import "./YouTubeModal.css";
 
 const YouTubeModal = ({ project, isOpen, onClose }) => {
@@ -82,7 +86,7 @@ const YouTubeModal = ({ project, isOpen, onClose }) => {
       className="youtube-modal"
       centered
       size="xl"
-      backdrop="static"
+      backdrop={true}
       aria-labelledby="youtube-modal-title"
     >
       <Modal.Body className="youtube-modal-body">
@@ -104,7 +108,7 @@ const YouTubeModal = ({ project, isOpen, onClose }) => {
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
-                title={project.title || 'Video player'}
+                title={project.title || "Video player"}
                 className="youtube-video-iframe"
                 loading="lazy"
               />
@@ -113,7 +117,7 @@ const YouTubeModal = ({ project, isOpen, onClose }) => {
             <div className="youtube-image-container">
               <img
                 src={thumbnail}
-                alt={project.title || 'Project thumbnail'}
+                alt={project.title || "Project thumbnail"}
                 className="youtube-modal-image"
                 loading="lazy"
               />
@@ -131,10 +135,12 @@ const YouTubeModal = ({ project, isOpen, onClose }) => {
           <div className="youtube-modal-header-content">
             <div>
               {project.category && (
-                <span className="youtube-modal-category">{project.category}</span>
+                <span className="youtube-modal-category">
+                  {project.category}
+                </span>
               )}
               <h2 id="youtube-modal-title" className="youtube-modal-title">
-                {project.title || 'Untitled Project'}
+                {project.title || "Untitled Project"}
               </h2>
             </div>
             {project.year && (
@@ -167,10 +173,11 @@ const YouTubeModal = ({ project, isOpen, onClose }) => {
                   </div>
                   <div className="youtube-tools-list">
                     {toolsArray.map((tool, index) => {
-                      const toolName = typeof tool === 'object' && tool !== null && tool.name
-                        ? tool.name
-                        : String(tool || '');
-                      
+                      const toolName =
+                        typeof tool === "object" && tool !== null && tool.name
+                          ? tool.name
+                          : String(tool || "");
+
                       if (!toolName) return null;
 
                       return (
@@ -194,4 +201,3 @@ const YouTubeModal = ({ project, isOpen, onClose }) => {
 };
 
 export default YouTubeModal;
-

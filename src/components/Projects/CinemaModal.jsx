@@ -36,10 +36,14 @@ const CinemaModal = ({ project, isOpen, onClose }) => {
     const videoType = project.videoType || "vimeo";
 
     if (videoType === "vimeo") {
-      const match = project.videoUrl.match(/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)(\d+)/);
+      const match = project.videoUrl.match(
+        /(?:vimeo\.com\/|player\.vimeo\.com\/video\/)(\d+)/,
+      );
       return match ? `https://player.vimeo.com/video/${match[1]}` : null;
     } else if (videoType === "youtube") {
-      const match = project.videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+      const match = project.videoUrl.match(
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
+      );
       return match ? `https://www.youtube.com/embed/${match[1]}` : null;
     } else if (videoType === "html5") {
       return project.videoUrl;
@@ -57,10 +61,14 @@ const CinemaModal = ({ project, isOpen, onClose }) => {
       className="cinema-modal"
       centered
       size="xl"
-      backdrop="static"
+      backdrop={true}
     >
       <Modal.Body className="cinema-modal-body">
-        <button className="cinema-modal-close" onClick={onClose} aria-label="Close">
+        <button
+          className="cinema-modal-close"
+          onClick={onClose}
+          aria-label="Close"
+        >
           <FaTimes />
         </button>
 
@@ -143,17 +151,22 @@ const CinemaModal = ({ project, isOpen, onClose }) => {
                     <span className="cinema-detail-label">Post Production</span>
                   </div>
                   <div className="cinema-tools-list">
-                    {(project.tools || project.skills || []).map((tool, index) => {
-                      const toolName = typeof tool === 'object' ? tool.name : tool;
-                      return (
-                        <span key={index} className="cinema-tool-tag">
-                          {toolName}
-                          {index < (project.tools || project.skills || []).length - 1 && (
-                            <span className="cinema-tool-separator">•</span>
-                          )}
-                        </span>
-                      );
-                    })}
+                    {(project.tools || project.skills || []).map(
+                      (tool, index) => {
+                        const toolName =
+                          typeof tool === "object" ? tool.name : tool;
+                        return (
+                          <span key={index} className="cinema-tool-tag">
+                            {toolName}
+                            {index <
+                              (project.tools || project.skills || []).length -
+                                1 && (
+                              <span className="cinema-tool-separator">•</span>
+                            )}
+                          </span>
+                        );
+                      },
+                    )}
                   </div>
                 </div>
               )}
@@ -192,4 +205,3 @@ const CinemaModal = ({ project, isOpen, onClose }) => {
 };
 
 export default CinemaModal;
-
