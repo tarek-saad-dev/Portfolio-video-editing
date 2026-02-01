@@ -22,19 +22,35 @@ import "./style.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const getProjectSortTime = (project) => {
-  if (!project) return 0;
+const parseProjectDate = (p) => {
+  if (!p) return 0;
 
-  if (project.date) {
-    const t = Date.parse(project.date);
+  // 1) لو السيرفر بقى بيرجع date كـ ISO (أفضل)
+  if (p.date) {
+    const t = Date.parse(p.date);
     if (!Number.isNaN(t)) return t;
   }
 
-  if (project.year) {
-    const t = Date.parse(String(project.year));
+  // 2) لو date جاية بصيغة MM/DD/YYYY string
+  // نحولها يدويًا:
+  if (typeof p.date === "string" && p.date.includes("/")) {
+    const [mm, dd, yyyy] = p.date.split("/");
+    const t = new Date(Number(yyyy), Number(mm) - 1, Number(dd)).getTime();
+    if (!Number.isNaN(t)) return t;
+  }
+
+  // 3) fallback على createdAt
+  if (p.createdAt) {
+    const t = Date.parse(p.createdAt);
+    if (!Number.isNaN(t)) return t;
+  }
+
+  // 4) fallback على year لو موجودة
+  if (p.year) {
+    const t = Date.parse(String(p.year));
     if (!Number.isNaN(t)) return t;
 
-    const y = Number(project.year);
+    const y = Number(p.year);
     if (!Number.isNaN(y)) return new Date(y, 0, 1).getTime();
   }
 
@@ -81,7 +97,7 @@ function App() {
         });
 
         processedProjects.sort(
-          (a, b) => getProjectSortTime(b) - getProjectSortTime(a),
+          (a, b) => parseProjectDate(b) - parseProjectDate(a),
         );
 
         setProjects(processedProjects);
